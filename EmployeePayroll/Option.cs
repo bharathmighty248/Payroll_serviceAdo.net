@@ -12,7 +12,8 @@ namespace EmployeePayroll
         {
             do
             {
-                Console.Write("\n1. Retrieve All Records\n" +
+                Console.Write("\n1. Add Employee Payroll Data\n" +
+                    "2. Retrieve All Records\n" +
                     "0. Exit\n" +
                     "Select One Option: ");
                 choice = Convert.ToInt32(Console.ReadLine());
@@ -20,6 +21,9 @@ namespace EmployeePayroll
                 switch (choice)
                 {
                     case 1:
+                        operations.AddEmployeeDetails();
+                        break;
+                    case 2:
                         operations.RetrieveEmployeeDetails();
                         if ((operations.empList.Count) > 0)
                         {
@@ -43,7 +47,7 @@ namespace EmployeePayroll
                         Console.WriteLine("-----Thankyou-----");
                         break;
                     default:
-                        Console.WriteLine("Invalid Option");
+                        Console.WriteLine("-----Invalid Option-----");
                         break;
                 }
             }
