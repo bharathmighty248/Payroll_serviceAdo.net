@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EmployeePayroll
 {
@@ -7,6 +8,8 @@ namespace EmployeePayroll
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome To Employee Payroll Problem");
+            Option option = new Option();
+            option.CRUDOperation();
         }
     }
 }
