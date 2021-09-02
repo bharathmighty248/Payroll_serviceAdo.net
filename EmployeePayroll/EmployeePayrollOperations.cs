@@ -72,6 +72,7 @@ namespace EmployeePayroll
                 sqlConnection.Open();
                 sqlDataAdapter.Fill(dataTable);
 
+                empList.Clear();
                 foreach (DataRow dataRow in dataTable.Rows)
                 {
                     empList.Add(
@@ -216,6 +217,76 @@ namespace EmployeePayroll
                 sqlConnection.Close();
             }
             
+        }
+
+        public List<Employee> RetrieveEmployeeDetailsBetweenDateRange()
+        {
+            try
+            {
+                SqlCommand sqlCommand = new SqlCommand("spGetAllEmployeeBetweenDateRange", sqlConnection);
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+                Console.Write("Give Date 1: ");
+                DateTime date1 = Convert.ToDateTime(Console.ReadLine());
+                sqlCommand.Parameters.AddWithValue("@Date1", date1);
+                Console.Write("Give Date 2: ");
+                DateTime date2 = Convert.ToDateTime(Console.ReadLine());
+                sqlCommand.Parameters.AddWithValue("@Date2", date2);
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
+                DataTable dataTable = new DataTable();
+
+                sqlConnection.Open();
+                sqlDataAdapter.Fill(dataTable);
+
+                empList.Clear();
+                foreach (DataRow dataRow in dataTable.Rows)
+                {
+                    empList.Add(
+                        new Employee
+                        {
+                            EmpId = Convert.ToInt32(dataRow["EmpId"]),
+                            Name = Convert.ToString(dataRow["Name"]),
+                            Gender = Convert.ToString(dataRow["Gender"]),
+                            Phone = Convert.ToString(dataRow["Phone"]),
+                            Address = Convert.ToString(dataRow["Address"]),
+                            Department = Convert.ToString(dataRow["Department"]),
+                            Salary = Convert.ToInt32(dataRow["Salary"]),
+                            Startdate = Convert.ToDateTime(dataRow["Startdate"])
+                        }
+                        );
+                }
+                return empList;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
+        }
+
+        public void DisplayDetails()
+        {
+            if ((empList.Count) > 0)
+            {
+                Console.WriteLine("________________________________________\n");
+                foreach (Employee employee in empList)
+                {
+                    Console.WriteLine("Employee Id: " + employee.EmpId);
+                    Console.WriteLine("Name: " + employee.Name);
+                    Console.WriteLine("Gender: " + employee.Gender);
+                    Console.WriteLine("Phone: " + employee.Phone);
+                    Console.WriteLine("Address: " + employee.Address);
+                    Console.WriteLine("Department: " + employee.Department);
+                    Console.WriteLine("Salary: " + employee.Salary);
+                    Console.WriteLine("StartDate: " + employee.Startdate);
+                    Console.WriteLine("________________________________________\n");
+                }
+            }
+            else
+                Console.WriteLine("-----Data Not Found-----");
         }
     }
 }

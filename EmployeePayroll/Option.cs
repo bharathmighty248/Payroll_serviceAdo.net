@@ -16,10 +16,10 @@ namespace EmployeePayroll
                     "2. Retrieve All Records\n" +
                     "3. Update Employee Payroll Data\n" +
                     "4. Delete Employee Details\n" +
+                    "5. Retrieve All Employee Payroll Data Between Date Range\n" +
                     "0. Exit\n" +
                     "Select One Option: ");
                 choice = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("________________________________________");
                 switch (choice)
                 {
                     case 1:
@@ -27,23 +27,7 @@ namespace EmployeePayroll
                         break;
                     case 2:
                         operations.RetrieveEmployeeDetails();
-                        if ((operations.empList.Count) > 0)
-                        {
-                            foreach (Employee employee in operations.empList)
-                            {
-                                Console.WriteLine("Employee Id: " + employee.EmpId);
-                                Console.WriteLine("Name: " + employee.Name);
-                                Console.WriteLine("Gender: " + employee.Gender);
-                                Console.WriteLine("Phone: " + employee.Phone);
-                                Console.WriteLine("Address: " + employee.Address);
-                                Console.WriteLine("Department: " + employee.Department);
-                                Console.WriteLine("Salary: " + employee.Salary);
-                                Console.WriteLine("StartDate: " + employee.Startdate);
-                                Console.WriteLine("________________________________________\n");
-                            }
-                        }
-                        else
-                            Console.WriteLine("-----Data Not Found-----");
+                        operations.DisplayDetails();
                         break;
                     case 3:
                         operations.UpdateEmployeeDetailss();
@@ -51,10 +35,16 @@ namespace EmployeePayroll
                     case 4:
                         operations.DeleteEmployeeDetails();
                         break;
+                    case 5:
+                        operations.RetrieveEmployeeDetailsBetweenDateRange();
+                        operations.DisplayDetails();
+                        break;
                     case 0:
+                        Console.WriteLine("________________________________________\n");
                         Console.WriteLine("-----Thankyou-----");
                         break;
                     default:
+                        Console.WriteLine("________________________________________\n");
                         Console.WriteLine("-----Invalid Option-----");
                         break;
                 }
