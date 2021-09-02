@@ -16,5 +16,16 @@ namespace EmployeePayrollTest
             int actual = operations.UpdateEmployeeDetails();
             Assert.AreEqual(expected,actual);
         }
+
+        /// <summary>
+        /// Test Case For UC-4
+        /// </summary>
+        [Test]
+        public void GivenEmployeePayrollDB_AfterUpdateWithStoredProcedure_ShouldReturnEffectedRows()
+        {
+            int expected = 1;
+            int actual = operations.UpdateEmployeeDetailsWithStoredProcedure();
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

@@ -128,6 +128,66 @@ namespace EmployeePayroll
             
         }
 
+        public int UpdateEmployeeDetailsWithStoredProcedure()
+        {
+            try
+            {
+                SqlCommand sqlCommand = new SqlCommand("spUpdateEmployeeDetails", this.sqlConnection);
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                sqlCommand.Parameters.AddWithValue("@Name", "Terisa");
+
+                sqlCommand.Parameters.AddWithValue("@Salary", "3000000");
+
+                sqlConnection.Open();
+                int effectedRows = sqlCommand.ExecuteNonQuery();
+
+                return effectedRows;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
+        }
+
+        public void UpdateEmployeeDetailss()
+        {
+            try
+            {
+                SqlCommand sqlCommand = new SqlCommand("spUpdateEmployeeDetails", this.sqlConnection);
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+                Console.Write("Give Name Of Employee You Want to Update Salary: ");
+                string name = Console.ReadLine();
+                sqlCommand.Parameters.AddWithValue("@Name", name);
+                Console.Write("Give New Salary: ");
+                int salary = Convert.ToInt32(Console.ReadLine());
+                sqlCommand.Parameters.AddWithValue("@Salary", salary);
+
+                sqlConnection.Open();
+                int effectedRows = sqlCommand.ExecuteNonQuery();
+                if (effectedRows >= 1)
+                {
+                    Console.WriteLine("-----Updated Successfully-----");
+                }
+                else
+                    Console.WriteLine("-----Something Went Wrong-----");
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
+        }
+
         public void DeleteEmployeeDetails()
         {
             try

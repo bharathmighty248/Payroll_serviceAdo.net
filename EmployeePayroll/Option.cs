@@ -46,7 +46,7 @@ namespace EmployeePayroll
                             Console.WriteLine("-----Data Not Found-----");
                         break;
                     case 3:
-                        operations.UpdateEmployeeDetails();
+                        operations.UpdateEmployeeDetailss();
                         break;
                     case 4:
                         operations.DeleteEmployeeDetails();
