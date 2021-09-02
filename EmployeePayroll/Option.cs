@@ -17,6 +17,7 @@ namespace EmployeePayroll
                     "3. Update Employee Payroll Data\n" +
                     "4. Delete Employee Details\n" +
                     "5. Retrieve All Employee Payroll Data Between Date Range\n" +
+                    "6. Aggregate Functions\n" +
                     "0. Exit\n" +
                     "Select One Option: ");
                 choice = Convert.ToInt32(Console.ReadLine());
@@ -38,6 +39,9 @@ namespace EmployeePayroll
                     case 5:
                         operations.RetrieveEmployeeDetailsBetweenDateRange();
                         operations.DisplayDetails();
+                        break;
+                    case 6:
+                        operations.AggregateFunctions();
                         break;
                     case 0:
                         Console.WriteLine("________________________________________\n");
