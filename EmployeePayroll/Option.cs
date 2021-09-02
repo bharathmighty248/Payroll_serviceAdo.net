@@ -14,6 +14,8 @@ namespace EmployeePayroll
             {
                 Console.Write("\n1. Add Employee Payroll Data\n" +
                     "2. Retrieve All Records\n" +
+                    "3. Update Employee Payroll Data\n" +
+                    "4. Delete Employee Details\n" +
                     "0. Exit\n" +
                     "Select One Option: ");
                 choice = Convert.ToInt32(Console.ReadLine());
@@ -42,6 +44,12 @@ namespace EmployeePayroll
                         }
                         else
                             Console.WriteLine("-----Data Not Found-----");
+                        break;
+                    case 3:
+                        operations.UpdateEmployeeDetails();
+                        break;
+                    case 4:
+                        operations.DeleteEmployeeDetails();
                         break;
                     case 0:
                         Console.WriteLine("-----Thankyou-----");
