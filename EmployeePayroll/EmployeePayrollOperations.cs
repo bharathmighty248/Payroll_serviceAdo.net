@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace EmployeePayroll
 {
@@ -37,7 +38,7 @@ namespace EmployeePayroll
                 int salary = Convert.ToInt32(Console.ReadLine());
                 sqlCommand.Parameters.AddWithValue("@Salary", salary);
                 Console.Write("Give Startdate: ");
-                DateTime startdate = Convert.ToDateTime(Console.ReadLine());
+                string startdate = Console.ReadLine();
                 sqlCommand.Parameters.AddWithValue("@Startdate", startdate);
 
                 sqlConnection.Open();
@@ -85,7 +86,7 @@ namespace EmployeePayroll
                             Address = Convert.ToString(dataRow["Address"]),
                             Department = Convert.ToString(dataRow["Department"]),
                             Salary = Convert.ToInt32(dataRow["Salary"]),
-                            Startdate = Convert.ToDateTime(dataRow["Startdate"])
+                            Startdate = Convert.ToString(dataRow["Startdate"])
                         }
                         );
                 }
@@ -229,7 +230,7 @@ namespace EmployeePayroll
                 DateTime date1 = Convert.ToDateTime(Console.ReadLine());
                 sqlCommand.Parameters.AddWithValue("@Date1", date1);
                 Console.Write("Give Date 2: ");
-                DateTime date2 = Convert.ToDateTime(Console.ReadLine());
+                string date2 = Console.ReadLine();
                 sqlCommand.Parameters.AddWithValue("@Date2", date2);
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
                 DataTable dataTable = new DataTable();
@@ -250,7 +251,7 @@ namespace EmployeePayroll
                             Address = Convert.ToString(dataRow["Address"]),
                             Department = Convert.ToString(dataRow["Department"]),
                             Salary = Convert.ToInt32(dataRow["Salary"]),
-                            Startdate = Convert.ToDateTime(dataRow["Startdate"])
+                            Startdate = Convert.ToString(dataRow["Startdate"])
                         }
                         );
                 }
@@ -380,6 +381,37 @@ namespace EmployeePayroll
             {
                 sqlConnection.Close();
             }
+        }
+
+        public void AddEmployeeDetailsWithOutThread(List<Employee>employees)
+        {
+            try
+            {
+                sqlConnection.Open();
+                employees.ForEach(employeeData =>
+                {
+                    SqlCommand sqlCommand = new SqlCommand("spAddEmployeeDetails", this.sqlConnection);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@Name", employeeData.Name);
+                    sqlCommand.Parameters.AddWithValue("@Gender", employeeData.Gender);
+                    sqlCommand.Parameters.AddWithValue("@Phone", employeeData.Phone);
+                    sqlCommand.Parameters.AddWithValue("@Address", employeeData.Address);
+                    sqlCommand.Parameters.AddWithValue("@Department", employeeData.Department);
+                    sqlCommand.Parameters.AddWithValue("@Salary", employeeData.Salary);
+                    sqlCommand.Parameters.AddWithValue("@Startdate", employeeData.Startdate);
+                    sqlCommand.ExecuteNonQuery();
+                });
+                
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
         }
     }
 }
